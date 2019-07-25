@@ -8,6 +8,8 @@
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+from math import isnan
+from std_msgs.msg import String
 
 
 class Car():
@@ -42,10 +44,34 @@ class Car():
         while not rospy.is_shutdown():
             # Publish the movement command
             self.cmd_vel_pub.publish(self.move_cmd)
-            r.sleep
+            r.sleep()
 
     def laserscan_callback(self, msg):
-        rospy.loginfo("Subscribing worked!")
+        dist = n = 0
+
+        midrange_min = midrange_max = 0
+
+        # Get indexes to filter the "nbr_mid" middle point out of the laserscan points
+        len_scan = len(msg.ranges)
+        nbr_mid = 50
+        if (len_scan > nbr_mid):
+            midrange_min = int((len_scan - nbr_mid) / 2)
+            midrange_max = midrange_min + nbr_mid
+
+        # Compute average distance out of the middle points, skip NaN
+        for point in msg.ranges[midrange_min:midrange_max]:
+            if not isnan(point):
+                dist += point
+                n += 1
+
+        # If no points, keep dist equal to zero
+        if n:
+            dist /= n
+        rospy.loginfo("dist: %s, nbr of points %s", String(dist), String(n))
+
+        # Move the turtlebot
+        self.move_cmd.linear.x = self.speed
+
 
     def shutdown(self):
         rospy.loginfo("Stopping the robot...")
