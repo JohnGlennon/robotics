@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0f6dbb7-7d80-47d8-9feb-a6d98e30533d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/eindproject.py" beforeDir="false" afterPath="$PROJECT_DIR$/eindproject.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gazebo /FullScaleRobotMap/model.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gazebo /FullScaleRobotMap/model.sdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gazebo /gazeborobotics" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/eindproject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="778">
-              <caret line="111" column="66" lean-forward="true" selection-start-line="111" selection-start-column="66" selection-end-line="111" selection-end-column="66" />
+            <state relative-caret-position="420">
+              <caret line="103" column="19" selection-start-line="103" selection-start-column="19" selection-end-line="103" selection-end-column="19" />
               <folding>
                 <element signature="e#226#238#0" expanded="true" />
               </folding>
@@ -43,8 +45,8 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="65" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="992" />
     <option name="y" value="24" />
     <option name="width" value="928" />
     <option name="height" value="1056" />
@@ -127,14 +129,15 @@
       <workItem from="1563529079186" duration="1290000" />
       <workItem from="1563624836627" duration="1422000" />
       <workItem from="1564064077789" duration="4564000" />
+      <workItem from="1565265856286" duration="1063000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7276000" />
+    <option name="totallyTimeSpent" value="8339000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="928" height="1056" extended-state="4" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.09286899" />
@@ -176,8 +179,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/eindproject.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="778">
-          <caret line="111" column="66" lean-forward="true" selection-start-line="111" selection-start-column="66" selection-end-line="111" selection-end-column="66" />
+        <state relative-caret-position="420">
+          <caret line="103" column="19" selection-start-line="103" selection-start-column="19" selection-end-line="103" selection-end-column="19" />
           <folding>
             <element signature="e#226#238#0" expanded="true" />
           </folding>
