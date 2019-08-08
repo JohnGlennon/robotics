@@ -4,13 +4,13 @@
 #
 #    The robot moves and follows some traffic rules.
 #	 The robot stops in front of a red light and it follows arrows that give direction.
-
+import cv2
 import rospy
+from cv_bridge import CvBridge, CvBridgeError
 from geometry_msgs.msg import Twist
-from sensor_msgs.msg import LaserScan
+from sensor_msgs.msg import LaserScan, Image
 from math import isnan
 from std_msgs.msg import String
-import cv2
 import numpy as np
 
 
@@ -25,7 +25,11 @@ class Car():
 		self.laser = None
 
 		# The speed in meters per second
-		self.speed = 0.1
+		self.speed = 0.4
+
+		self.bridge = CvBridge()
+
+		self.image_sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_callback)
 
 		# The counter that counts when a picture needs to be taken
 		self.take_picture_counter = 0
@@ -82,6 +86,16 @@ class Car():
 		# Move the turtlebot
 		self.move_cmd.linear.x = self.speed
 
+	def image_callback(self, data):
+		# Convert image to OpenCV format
+		try:
+			cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+		except CvBridgeError as e:
+			print(e)
+
+		self.image_received = True
+		self.image = cv_image
+
 	def start(self):
 		rospy.loginfo("start Car Node")
 
@@ -96,6 +110,12 @@ class Car():
 
 				if car.take_picture(img_title):
 					rospy.loginfo("Saved image " + img_title)
+				else:
+					rospy.loginfo("No images received")
+
+				self.take_picture_counter = 0
+			else:
+				self.take_picture_counter += 1
 
 			# Publish the movement command
 			self.cmd_vel_pub.publish(self.move_cmd)
@@ -107,21 +127,24 @@ class Car():
 			cv2.imwrite(img_title, self.image)
 
 			img = cv2.imread('photo.jpg', 1)
-			hsv = cv2.cctColor(img, cv2.COLOR_BGR2HSV)
+			# hsv = cv2.cctColor(img, cv2.COLOR_BGR2HSV)
 
 			lower_range = np.array([50, 100, 100], dtype=np.uint8)
 			upper_range = np.array([70, 255, 255], dtype=np.uint8)
 
-			mask = cv2.inRange(hsv, lower_range, upper_range)
+			# mask = cv2.inRange(hsv, lower_range, upper_range)
 
+			# cv2.imshow('mask', mask)
 			cv2.destroyAllWindows()
 
-			if cv2.countNonZero(mask) == 0:
-				return False
-			else:
-				self.move_cmd.linear.x = 0
-				self.move_cmd.angular.z = 0
-				rospy.loginfo("Waits 5 seconds for the red light")
+			# if cv2.countNonZero(mask) == 0:
+			# 	rospy.loginfo("Image is black")
+			# 	return False
+			# else:
+			self.move_cmd.linear.x = 0
+			self.move_cmd.angular.z = 0
+			rospy.loginfo("Waits 5 seconds for the red light")
+			return True
 
 		else:
 			return False
