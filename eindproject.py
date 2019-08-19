@@ -24,6 +24,9 @@ class Car():
 		# Initialise the laser
 		self.laser = None
 
+		# Left laser index
+		self.laserIndex = 0
+
 		# The speed in meters per second
 		self.speed = 0.4
 
@@ -111,8 +114,10 @@ class Car():
 
 		while not rospy.is_shutdown():
 
+			self.move_cmd.angular.z = 0
+
 			# Move the turtlebot
-			self.move_cmd.linear.x = self.speed
+			self.move_bot()
 
 			# Take a photo
 
@@ -128,6 +133,18 @@ class Car():
 			# Publish the movement command
 			self.cmd_vel_pub.publish(self.move_cmd)
 			self.rate.sleep()
+
+	def move_bot(self):
+		self.move_cmd.linear.x = self.speed
+
+		most_right_value = self.laser.ranges[self.laserIndex]
+		most_left_value = self.laser.ranges[len(self.laser.ranges) - 1]
+
+		if most_right_value < 0.5:
+			self.move_cmd.angular.z = 0.3
+
+		if most_left_value < 0.5:
+			self.move_cmd.angular.z = -0.3
 
 	def take_picture(self, img_title):
 		if self.image_received:
@@ -153,9 +170,9 @@ class Car():
 			cv2.destroyAllWindows()
 
 			if cv2.countNonZero(mask) == 0:
-				rospy.loginfo("Image doesn't have the required color")
-			elif self.distance > 2 or self.distance < 1.5:
-				rospy.loginfo("Color detected but distance is too long or too short")
+				rospy.loginfo("Image doesn't contain the color red")
+			elif self.distance > 2 or self.distance < 1.9:
+				rospy.loginfo("Color red detected but distance is too long or too short")
 			else:
 				rospy.loginfo("Waits 5 seconds for the red light")
 				self.move_cmd.linear.x = 0
@@ -172,12 +189,29 @@ class Car():
 			mask_green = cv2.inRange(hsv, lower_green, upper_green)
 
 			if cv2.countNonZero(mask_green) == 0:
-				rospy.loginfo("Image doesn't have the color green")
+				rospy.loginfo("Image doesn't contain the color green")
 			elif self.distance > 1.25:
 				rospy.loginfo("Color green detected but distance is too long")
 			else:
 				rospy.loginfo("Turning 90 degrees to the right")
 				self.rotate("right")
+
+			# Lower blue
+			lower_blue = np.array([110, 50, 50], dtype=np.uint8)
+
+			# Upper blue
+			upper_blue = np.array([130, 255, 255], dtype=np.uint8)
+
+			# Generating the mask to detect blue
+			mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
+
+			if cv2.countNonZero(mask_blue) == 0:
+				rospy.loginfo("Image doesn't contain the color blue")
+			elif self.distance > 1.25:
+				rospy.loginfo("Color blue detected but distance is too long")
+			else:
+				rospy.loginfo("Turning 90 degrees to the left")
+				self.rotate("left")
 
 			return True
 		else:
@@ -194,7 +228,6 @@ class Car():
 		current_angle = 0
 
 		while current_angle < self.relative_angle:
-			rospy.loginfo(current_angle)
 			self.cmd_vel_pub.publish(self.move_cmd)
 			t1 = rospy.Time.now().to_sec()
 			current_angle = self.angular_speed * (t1 - t0)

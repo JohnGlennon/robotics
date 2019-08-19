@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0f6dbb7-7d80-47d8-9feb-a6d98e30533d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gazebo/gazeborobotics.world" beforeDir="false" afterPath="$PROJECT_DIR$/Gazebo/gazeborobotics.world" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eindproject.py" beforeDir="false" afterPath="$PROJECT_DIR$/eindproject.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/photo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/photo.jpg" afterDir="false" />
     </list>
@@ -17,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/eindproject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="613">
-              <caret line="203" selection-start-line="203" selection-end-line="203" />
+            <state relative-caret-position="449">
+              <caret line="140" column="71" selection-start-line="140" selection-start-column="71" selection-end-line="140" selection-end-column="71" />
               <folding>
                 <element signature="e#225#235#0" expanded="true" />
               </folding>
@@ -47,6 +49,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/pid.py" />
         <option value="$PROJECT_DIR$/eindproject.py" />
       </list>
     </option>
@@ -80,6 +83,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mazesolver" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -137,18 +141,18 @@
       <workItem from="1564064077789" duration="4564000" />
       <workItem from="1565265856286" duration="1063000" />
       <workItem from="1565269581963" duration="13176000" />
-      <workItem from="1566201203370" duration="10233000" />
+      <workItem from="1566201203370" duration="17389000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31748000" />
+    <option name="totallyTimeSpent" value="38904000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="992" y="24" width="928" height="1056" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24829932" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24829932" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -185,10 +189,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pid.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/eindproject.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="613">
-          <caret line="203" selection-start-line="203" selection-end-line="203" />
+        <state relative-caret-position="449">
+          <caret line="140" column="71" selection-start-line="140" selection-start-column="71" selection-end-line="140" selection-end-column="71" />
           <folding>
             <element signature="e#225#235#0" expanded="true" />
           </folding>
