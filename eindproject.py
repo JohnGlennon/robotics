@@ -33,7 +33,7 @@ class Car():
 		self.PI = 3.1415926535897
 
 		# The speed of turning
-		self.angular_speed = 0.7
+		self.angular_speed = 1
 
 		# Converting the angle in radians
 		self.relative_angle = self.angle * 2 * self.PI / 360
@@ -184,8 +184,6 @@ class Car():
 			return False
 
 	def rotate(self, direction):
-		self.move_cmd.linear.x = 0
-
 		if direction == "right":
 			self.move_cmd.angular.z = -self.angular_speed
 		elif direction == "left":
@@ -203,7 +201,6 @@ class Car():
 
 		# Stop turning
 		self.move_cmd.angular.z = 0
-		self.move_cmd.linear.x = self.speed
 
 	def shutdown(self):
 		rospy.loginfo("Stopping the robot...")

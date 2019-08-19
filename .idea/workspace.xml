@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c0f6dbb7-7d80-47d8-9feb-a6d98e30533d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gazebo/gazeborobotics.world" beforeDir="false" afterPath="$PROJECT_DIR$/Gazebo/gazeborobotics.world" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eindproject.py" beforeDir="false" afterPath="$PROJECT_DIR$/eindproject.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/photo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/photo.jpg" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/eindproject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="206" selection-start-line="206" selection-end-line="206" />
+            <state relative-caret-position="613">
+              <caret line="203" selection-start-line="203" selection-end-line="203" />
               <folding>
                 <element signature="e#225#235#0" expanded="true" />
               </folding>
@@ -38,6 +38,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>slee</find>
+      <find>np</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -136,12 +137,12 @@
       <workItem from="1564064077789" duration="4564000" />
       <workItem from="1565265856286" duration="1063000" />
       <workItem from="1565269581963" duration="13176000" />
-      <workItem from="1566201203370" duration="9647000" />
+      <workItem from="1566201203370" duration="10233000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31162000" />
+    <option name="totallyTimeSpent" value="31748000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="992" y="24" width="928" height="1056" extended-state="4" />
@@ -186,8 +187,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/eindproject.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="206" selection-start-line="206" selection-end-line="206" />
+        <state relative-caret-position="613">
+          <caret line="203" selection-start-line="203" selection-end-line="203" />
           <folding>
             <element signature="e#225#235#0" expanded="true" />
           </folding>
