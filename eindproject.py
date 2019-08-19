@@ -152,8 +152,8 @@ class Car():
 
 			if cv2.countNonZero(mask) == 0:
 				rospy.loginfo("Image doesn't have the required color")
-			elif self.distance > 1:
-				rospy.loginfo("Color detected but distance is too long")
+			elif self.distance > 2 or self.distance < 1.5:
+				rospy.loginfo("Color detected but distance is too long or too short")
 			else:
 				rospy.loginfo("Waits 5 seconds for the red light")
 				self.move_cmd.linear.x = 0

@@ -1514,10 +1514,10 @@
       <static>1</static>
     </model>
     <state world_name='default'>
-      <sim_time>1244 536000000</sim_time>
-      <real_time>79 883436309</real_time>
-      <wall_time>1565466595 395322850</wall_time>
-      <iterations>65235</iterations>
+      <sim_time>1341 275000000</sim_time>
+      <real_time>119 650898150</real_time>
+      <wall_time>1566201916 699713470</wall_time>
+      <iterations>96739</iterations>
       <model name='FullScaleRobotMap'>
         <pose frame=''>0.042879 3.61383 0 0 -0 1.56267</pose>
         <scale>1 1 1</scale>
@@ -1977,25 +1977,25 @@
         </link>
       </model>
       <model name='mobile_base'>
-        <pose frame=''>0.191976 -8.96156 -0.000247 0.000776 -0.014409 0.318318</pose>
+        <pose frame=''>-0.004387 -8.51601 -0.000247 0.000763 -0.014413 1.56337</pose>
         <scale>1 1 1</scale>
         <link name='base_footprint'>
-          <pose frame=''>0.191976 -8.96156 -0.000247 0.000776 -0.014409 0.318318</pose>
-          <velocity>0.001007 0.000507 0.00017 0.0016 0.000429 0.005994</velocity>
-          <acceleration>-0.003611 -0.026879 0.022923 0.327826 -0.751942 0.03079</acceleration>
-          <wrench>-0.016962 -0.126258 0.107676 0 -0 0</wrench>
+          <pose frame=''>-0.004387 -8.51601 -0.000247 0.000763 -0.014413 1.56337</pose>
+          <velocity>0.000379 -1.8e-05 0.000206 7.2e-05 -0.003408 0.000478</velocity>
+          <acceleration>-0.051995 -0.002257 0.104691 0.059581 -0.206122 0.04467</acceleration>
+          <wrench>-0.244237 -0.0106 0.491763 0 -0 0</wrench>
         </link>
         <link name='wheel_left_link'>
-          <pose frame=''>0.155509 -8.85252 0.03519 1.57001 -0.136329 -2.82316</pose>
-          <velocity>0.000285 3.6e-05 0.00103 -0.001118 0.008425 0.006004</velocity>
-          <acceleration>0.037675 0.009752 0.002848 -0.276772 1.06986 -0.002813</acceleration>
-          <wrench>0.000377 9.8e-05 2.8e-05 0 -0 0</wrench>
+          <pose frame=''>-0.119361 -8.51567 0.035183 1.57003 -0.132401 -1.57811</pose>
+          <velocity>0.000259 -7.5e-05 -0.000186 7.2e-05 -0.003408 0.000478</velocity>
+          <acceleration>-0.404101 0.064232 1.31658 0.34658 -0.015025 0.003541</acceleration>
+          <wrench>-0.004041 0.000642 0.013166 0 -0 0</wrench>
         </link>
         <link name='wheel_right_link'>
-          <pose frame=''>0.227494 -9.07096 0.034987 -1.56895 -1.1406 0.31665</pose>
-          <velocity>0.001595 0.000467 0.000869 -0.013459 0.045904 0.006034</velocity>
-          <acceleration>0.028256 0.006836 0.004835 -0.195025 0.806833 -0.002905</acceleration>
-          <wrench>0.000283 6.8e-05 4.8e-05 0 -0 0</wrench>
+          <pose frame=''>0.110633 -8.51737 0.034992 -1.56902 -1.13212 1.56177</pose>
+          <velocity>0.00026 3.5e-05 0.000598 7.2e-05 -0.003408 0.000478</velocity>
+          <acceleration>-0.407697 -0.005801 0.449924 -0.762133 -0.09644 0.004988</acceleration>
+          <wrench>-0.004077 -5.8e-05 0.004499 0 -0 0</wrench>
         </link>
       </model>
       <light name='sun'>
@@ -2004,7 +2004,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>5.76451 5.38161 2.83027 -0 1.0338 1.42004</pose>
+        <pose frame=''>-1.29299 -9.19557 8.06337 0 1.2658 0.364053</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -3161,6 +3161,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
+              <scale>1 1 1</scale>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -3181,6 +3182,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
+              <scale>1 1 1</scale>
             </mesh>
           </geometry>
           <material>
@@ -3194,6 +3196,7 @@
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <pose frame=''>6.82369 0.475836 0 0 -0 0</pose>
     </model>
@@ -3204,6 +3207,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
+              <scale>1 1 1</scale>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -3224,6 +3228,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
+              <scale>1 1 1</scale>
             </mesh>
           </geometry>
           <material>
@@ -3237,6 +3242,7 @@
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <pose frame=''>-6.56835 2.73797 0 0 -0 0</pose>
     </model>
