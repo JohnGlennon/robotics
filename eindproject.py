@@ -25,7 +25,7 @@ class Car():
 		self.laser = None
 
 		# The speed in meters per second
-		self.speed = 0.4
+		self.speed = 3
 
 		# Converts image to bgr
 		self.bridge = CvBridge()
