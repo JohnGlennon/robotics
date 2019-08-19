@@ -3,7 +3,7 @@
 #    eindproject.py - Glenn Geysen and Mario van Kerckhoven
 #
 #    The robot moves and follows some traffic rules.
-#	 The robot stops in front of a red light and it follows arrows that give direction.
+#	 The robot stops in front of a red light and it follows colors that give direction.
 import cv2
 import rospy
 from cv_bridge import CvBridge, CvBridgeError
@@ -25,16 +25,24 @@ class Car():
 		self.laser = None
 
 		# The speed in meters per second
-		self.speed = 3
+		self.speed = 0.4
+
+		# The angle in case the turtlebot needs to turn
+		self.angle = 90
+
+		self.PI = 3.1415926535897
+
+		# The speed of turning
+		self.angular_speed = 0.7
+
+		# Converting the angle in radians
+		self.relative_angle = self.angle * 2 * self.PI / 360
 
 		# Converts image to bgr
 		self.bridge = CvBridge()
 
 		# Subscribe to image topic
 		self.image_sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_callback)
-
-		# The counter that counts when a picture needs to be taken
-		self.take_picture_counter = 0
 
 		# Checks if an image is received
 		self.image_received = False
@@ -106,22 +114,16 @@ class Car():
 			# Move the turtlebot
 			self.move_cmd.linear.x = self.speed
 
-			# Only take a picture once in every 10 iterations
-			if self.take_picture_counter == 10:
-				# Take a photo
+			# Take a photo
 
-				# Use '_image_title' parameter from command line
-				# Default value is 'photo.jpg'
-				img_title = rospy.get_param('~image_title', 'photo.jpg')
+			# Use '_image_title' parameter from command line
+			# Default value is 'photo.jpg'
+			img_title = rospy.get_param('~image_title', 'photo.jpg')
 
-				if car.take_picture(img_title):
-					rospy.loginfo("Saved image " + img_title)
-				else:
-					rospy.loginfo("No images received")
-
-				self.take_picture_counter = 0
+			if car.take_picture(img_title):
+				rospy.loginfo("Saved image " + img_title)
 			else:
-				self.take_picture_counter += 1
+				rospy.loginfo("No images received")
 
 			# Publish the movement command
 			self.cmd_vel_pub.publish(self.move_cmd)
@@ -160,9 +162,48 @@ class Car():
 				self.move_cmd.angular.z = 0
 				rospy.sleep(5)
 
+			# Lower green
+			lower_green = np.array([65, 60, 60], dtype=np.uint8)
+
+			# Upper green
+			upper_green = np.array([80, 255, 255], dtype=np.uint8)
+
+			# Generating the mask to detect green
+			mask_green = cv2.inRange(hsv, lower_green, upper_green)
+
+			if cv2.countNonZero(mask_green) == 0:
+				rospy.loginfo("Image doesn't have the color green")
+			elif self.distance > 1.25:
+				rospy.loginfo("Color green detected but distance is too long")
+			else:
+				rospy.loginfo("Turning 90 degrees to the right")
+				self.rotate("right")
+
 			return True
 		else:
 			return False
+
+	def rotate(self, direction):
+		self.move_cmd.linear.x = 0
+
+		if direction == "right":
+			self.move_cmd.angular.z = -self.angular_speed
+		elif direction == "left":
+			self.move_cmd.angular.z = self.angular_speed
+
+		# Setting the current time for distance calculus
+		t0 = rospy.Time.now().to_sec()
+		current_angle = 0
+
+		while current_angle < self.relative_angle:
+			rospy.loginfo(current_angle)
+			self.cmd_vel_pub.publish(self.move_cmd)
+			t1 = rospy.Time.now().to_sec()
+			current_angle = self.angular_speed * (t1 - t0)
+
+		# Stop turning
+		self.move_cmd.angular.z = 0
+		self.move_cmd.linear.x = self.speed
 
 	def shutdown(self):
 		rospy.loginfo("Stopping the robot...")
