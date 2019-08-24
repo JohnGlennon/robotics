@@ -4,6 +4,7 @@
 #
 #    The robot moves and follows some traffic rules.
 #	 The robot stops in front of a red light and it follows colors that give direction.
+
 import cv2
 import numpy as np
 import rospy
@@ -12,6 +13,7 @@ from geometry_msgs.msg import Twist
 from math import isnan
 from sensor_msgs.msg import LaserScan, Image
 from std_msgs.msg import String
+from math import pi
 
 
 class Car():
@@ -20,6 +22,24 @@ class Car():
 
 		# Set the shutdown function
 		rospy.on_shutdown(self.shutdown)
+
+		# The speed in meters per second
+		self.speed = 0.4
+
+		# The angle in case the turtlebot needs to turn
+		self.angle = 90
+
+		# The speed of turning
+		self.angular_speed = 1
+
+		# Converting the angle in radians
+		self.relative_angle = self.angle * 2 * pi / 360
+
+		# Set rate to update robot's movement
+		self.rate = rospy.Rate(10)
+
+		# Initialize the movement command
+		self.move_cmd = Twist()
 
 		# Initialise the laser
 		self.laser = None
@@ -30,28 +50,14 @@ class Car():
 		# Distance on the right side of the turtlebot
 		self.most_right_value = None
 
+		# Distance to wall
+		self.distance = 0
+
 		# Checks if it's allowed to stop in front of a red light
 		self.stop_allowed = True
 
 		# Saves the time
 		self.t0 = None
-
-		# Left laser index
-		self.laserIndex = 0
-
-		# The speed in meters per second
-		self.speed = 0.4
-
-		# The angle in case the turtlebot needs to turn
-		self.angle = 90
-
-		self.PI = 3.1415926535897
-
-		# The speed of turning
-		self.angular_speed = 1
-
-		# Converting the angle in radians
-		self.relative_angle = self.angle * 2 * self.PI / 360
 
 		# Converts image to bgr
 		self.bridge = CvBridge()
@@ -62,19 +68,11 @@ class Car():
 		# Checks if an image is received
 		self.image_received = False
 
+		# The image
 		self.image = None
-
-		# Set rate to update robot's movement
-		self.rate = rospy.Rate(10)
-
-		# Initialize the movement command
-		self.move_cmd = Twist()
 
 		# Publisher to control the robot's movement
 		self.cmd_vel_pub = rospy.Publisher('/cmd_vel_mux/input/teleop', Twist, queue_size=5)
-
-		# Distance to wall
-		self.distance = 0
 
 		# Subscribe to the laserscan
 		self.scan_subscriber = rospy.Subscriber('/scan', LaserScan, self.laserscan_callback)
@@ -126,11 +124,12 @@ class Car():
 
 		while not rospy.is_shutdown():
 
+			# Stop turning
 			self.move_cmd.angular.z = 0
 
 			# Update distances on the left and on the right
 			self.most_left_value = self.laser.ranges[len(self.laser.ranges) - 1]
-			self.most_right_value = self.laser.ranges[self.laserIndex]
+			self.most_right_value = self.laser.ranges[0]
 
 			# Move the turtlebot
 			self.move_bot()
@@ -151,8 +150,10 @@ class Car():
 			self.rate.sleep()
 
 	def move_bot(self):
+		# Make the turtlebot move straight forward with the given speed
 		self.move_cmd.linear.x = self.speed
 
+		# The turtlebot keeps its distance from the wall
 		if self.most_right_value < 0.5:
 			self.move_cmd.angular.z = 0.3
 
@@ -198,8 +199,7 @@ class Car():
 			# Generating the mask to detect blue
 			mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
 
-			cv2.destroyAllWindows()
-
+			# Check what color is detected and do something with it
 			if cv2.countNonZero(mask_red) == 0:
 				rospy.loginfo("Image doesn't contain the color red")
 
@@ -218,7 +218,7 @@ class Car():
 				else:
 					rospy.loginfo("Turning 90 degrees to the left")
 					self.rotate("left")
-			elif self.most_left_value > 2.5 or self.most_left_value < 2:
+			elif self.most_left_value > 4.5 or self.most_left_value < 4:
 				rospy.loginfo("Color red detected but distance is too long or too short")
 			else:
 				if self.stop_allowed == True:
