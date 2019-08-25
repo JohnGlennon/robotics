@@ -62,6 +62,26 @@ class Car():
 		# Converts image to bgr
 		self.bridge = CvBridge()
 
+		# Range for lower red
+		self.lower_red1 = np.array([0, 120, 70], dtype=np.uint8)
+		self.lower_red2 = np.array([10, 255, 255], dtype=np.uint8)
+
+		# Range for upper red
+		self.upper_red1 = np.array([170, 120, 70], dtype=np.uint8)
+		self.upper_red2 = np.array([180, 255, 255], dtype=np.uint8)
+
+		# Lower green
+		self.lower_green = np.array([65, 60, 60], dtype=np.uint8)
+
+		# Upper green
+		self.upper_green = np.array([80, 255, 255], dtype=np.uint8)
+
+		# Lower blue
+		self.lower_blue = np.array([110, 50, 50], dtype=np.uint8)
+
+		# Upper blue
+		self.upper_blue = np.array([130, 255, 255], dtype=np.uint8)
+
 		# Subscribe to image topic
 		self.image_sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_callback)
 
@@ -168,36 +188,20 @@ class Car():
 			img = cv2.imread('photo.jpg', 1)
 			hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-			# Range for lower red
-			lower_red = np.array([0, 120, 70], dtype=np.uint8)
-			upper_red = np.array([10, 255, 255], dtype=np.uint8)
-			mask1_red = cv2.inRange(hsv, lower_red, upper_red)
+			# Generating the first mask for red
+			mask1_red = cv2.inRange(hsv, self.lower_red1, self.lower_red2)
 
-			# Range for upper red
-			lower_red = np.array([170, 120, 70], dtype=np.uint8)
-			upper_red = np.array([180, 255, 255], dtype=np.uint8)
-			mask2_red = cv2.inRange(hsv, lower_red, upper_red)
+			# Generating the second mask for red
+			mask2_red = cv2.inRange(hsv, self.upper_red1, self.upper_red2)
 
 			# Generating the final mask to detect red
 			mask_red = mask1_red + mask2_red
 
-			# Lower green
-			lower_green = np.array([65, 60, 60], dtype=np.uint8)
-
-			# Upper green
-			upper_green = np.array([80, 255, 255], dtype=np.uint8)
-
 			# Generating the mask to detect green
-			mask_green = cv2.inRange(hsv, lower_green, upper_green)
-
-			# Lower blue
-			lower_blue = np.array([110, 50, 50], dtype=np.uint8)
-
-			# Upper blue
-			upper_blue = np.array([130, 255, 255], dtype=np.uint8)
+			mask_green = cv2.inRange(hsv, self.lower_green, self.upper_green)
 
 			# Generating the mask to detect blue
-			mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
+			mask_blue = cv2.inRange(hsv, self.lower_blue, self.upper_blue)
 
 			# Check what color is detected and do something with it
 			if cv2.countNonZero(mask_red) == 0:
@@ -205,7 +209,7 @@ class Car():
 
 				if cv2.countNonZero(mask_green) == 0:
 					rospy.loginfo("Image doesn't contain the color green")
-				elif self.distance > 1.25:
+				elif self.distance > 1.35:
 					rospy.loginfo("Color green detected but distance is too long")
 				else:
 					rospy.loginfo("Turning 90 degrees to the right")
@@ -213,7 +217,7 @@ class Car():
 
 				if cv2.countNonZero(mask_blue) == 0:
 					rospy.loginfo("Image doesn't contain the color blue")
-				elif self.distance > 1.25:
+				elif self.distance > 1.35:
 					rospy.loginfo("Color blue detected but distance is too long")
 				else:
 					rospy.loginfo("Turning 90 degrees to the left")
